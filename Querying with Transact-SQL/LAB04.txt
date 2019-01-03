@@ -1,0 +1,48 @@
+select c.CompanyName,a.AddressLine1,a.City,'Billing' AS AddressType from 
+SalesLT.Customer as c JOIN SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID AND ca.AddressType = 'Main Office'
+JOIN SalesLT.Address as a
+ON ca.AddressID=a.AddressID
+
+ 
+SELECT c.CompanyName, a.AddressLine1, a.City, 'Shipping' AS AddressType
+FROM SalesLT.Customer as c
+JOIN SalesLT.CustomerAddress as ca
+ON c.CustomerID = ca.CustomerID AND ca.AddressType = 'Shipping'
+JOIN SalesLT.Address AS a
+ON a.AddressID = ca.AddressID;
+
+select c.CompanyName,a.AddressLine1,a.City,
+Case ca.AddressType
+when 'Main Office' then 'Billing'
+else 'Shipping'
+end as AddressType 
+FROM SalesLT.Customer as c JOIN SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID 
+JOIN SalesLT.Address as a
+ON ca.AddressID=a.AddressID
+order by c.CompanyName,AddressType
+
+select c.CompanyName from SalesLT.Customer as c
+JOIN  SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID
+where ca.AddressType='Main Office'
+EXCEPT
+select c.CompanyName from SalesLT.Customer as c
+JOIN  SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID
+where ca.AddressType='Shipping'
+
+
+select c.CompanyName from SalesLT.Customer as c
+JOIN  SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID
+where ca.AddressType='Main Office'
+INTERSECT
+select c.CompanyName from SalesLT.Customer as c
+JOIN  SalesLT.CustomerAddress as ca
+on c.CustomerID=ca.CustomerID
+where ca.AddressType='Shipping'
+
+
+

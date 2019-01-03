@@ -1,0 +1,24 @@
+select * from SalesLT.Customer;
+
+select Title,FirstName,MiddleName,LastName,Suffix from SalesLT.Customer;
+
+select SalesPerson,Title+' '+LastName as CustomerName,Phone from SalesLT.Customer;
+
+select CAST(CustomerID as varchar) + ': ' + CompanyName from SalesLT.Customer;
+
+select SalesOrderNumber + ' (' + convert(varchar(2), RevisionNumber) +')', convert(nvarchar(30), OrderDate, 102) as OrderDate 
+from SalesLT.SalesOrderHeader;
+
+select FirstName + ' ' + isnull(MiddleName + ' ', '') + LastName as CustomerName
+from SalesLT.Customer;
+
+select CustomerID, coalesce (EmailAddress, Phone) as PrimaryContact
+from SalesLT.Customer;
+
+
+select SalesOrderID, OrderDate, 
+		case ShipDate
+			when null then 'Awaiting Shipment'
+			else 'Shipped'
+		end as ShippingStatus
+from SalesLT.SalesOrderHeader;
